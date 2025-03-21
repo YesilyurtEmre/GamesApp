@@ -86,10 +86,37 @@ class GameCell: UITableViewCell {
         }
     }
     
-    func configure(with game: Game) {
+    //    func configure(with game: GameViewModelItem) {
+    //        titleLabel.text = game.title
+    //        metacriticLabel.text = "Metacritic: \(game.metacritic)"
+    //        genreLabel.text = game.genres
+    //        if let url = URL(string: game.imageURL) {
+    //            gameImageView.loadImage(from: url)
+    //        }
+    //    }
+    func configure(with game: GameViewModelItem) {
         titleLabel.text = game.title
-        metacriticLabel.text = "Metacritic: \(game.metacriticScore)"
-        genreLabel.text = game.genre
-        gameImageView.image = UIImage(named: game.imageName)
+        
+        let metacriticText = "Metacritic: \(game.metacritic)"
+        let metacriticAttributedString = NSMutableAttributedString(string: metacriticText)
+        
+        if let range = metacriticText.range(of: "Metacritic: ") {
+            let nsRange = NSRange(range, in: metacriticText)
+            metacriticAttributedString.addAttribute(.foregroundColor, value: UIColor.primaryBlack, range: nsRange)
+        }
+        
+        if let range = metacriticText.range(of: game.metacritic) {
+            let nsRange = NSRange(range, in: metacriticText)
+            metacriticAttributedString.addAttribute(.foregroundColor, value: UIColor.rateColor, range: nsRange)
+        }
+        
+        metacriticLabel.attributedText = metacriticAttributedString
+        
+        genreLabel.text = game.genres
+        
+        if let url = URL(string: game.imageURL) {
+            gameImageView.loadImage(from: url)
+        }
     }
+    
 }

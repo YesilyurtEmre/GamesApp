@@ -18,6 +18,15 @@ class GamesVC: UIViewController {
         view.backgroundColor = .white
         setupTableView()
         setupConstraints()
+        fetchGames()
+    }
+    
+    private func fetchGames() {
+        viewModel.fetchGames { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
     }
     
     private func setupTableView() {
@@ -47,3 +56,4 @@ extension GamesVC: UITableViewDataSource {
         return cell
     }
 }
+
