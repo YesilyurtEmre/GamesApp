@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6FD09D962D8BE2E4004C3155 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6FD09D952D8BE2E4004C3155 /* SnapKit */; };
+		6FE13AAA2D8D3FB900D45180 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6FE13AA92D8D3FB900D45180 /* Alamofire */; };
+		6FE13AB52D8D497B00D45180 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 6FE13AB42D8D497B00D45180 /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FD09D962D8BE2E4004C3155 /* SnapKit in Frameworks */,
+				6FE13AB52D8D497B00D45180 /* SDWebImage in Frameworks */,
+				6FE13AAA2D8D3FB900D45180 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +74,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6F86A0662D89EF620038D201 /* Build configuration list for PBXNativeTarget "GamesApp" */;
 			buildPhases = (
+				6FCF82AE2D8C53220035B234 /* ShellScript */,
 				6F86A04F2D89EF610038D201 /* Sources */,
 				6F86A0502D89EF610038D201 /* Frameworks */,
 				6F86A0512D89EF610038D201 /* Resources */,
@@ -84,6 +89,8 @@
 			name = GamesApp;
 			packageProductDependencies = (
 				6FD09D952D8BE2E4004C3155 /* SnapKit */,
+				6FE13AA92D8D3FB900D45180 /* Alamofire */,
+				6FE13AB42D8D497B00D45180 /* SDWebImage */,
 			);
 			productName = GamesApp;
 			productReference = 6F86A0532D89EF610038D201 /* GamesApp.app */;
@@ -115,6 +122,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				6FD09D942D8BE2E4004C3155 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				6FE13AA82D8D3FB900D45180 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				6FE13AB32D8D497B00D45180 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6F86A0542D89EF610038D201 /* Products */;
@@ -135,6 +144,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6FCF82AE2D8C53220035B234 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6F86A04F2D89EF610038D201 /* Sources */ = {
@@ -162,6 +191,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -190,6 +220,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -354,6 +385,22 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		6FE13AA82D8D3FB900D45180 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		6FE13AB32D8D497B00D45180 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -361,6 +408,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6FD09D942D8BE2E4004C3155 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		6FE13AA92D8D3FB900D45180 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6FE13AA82D8D3FB900D45180 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		6FE13AB42D8D497B00D45180 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6FE13AB32D8D497B00D45180 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

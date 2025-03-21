@@ -1,0 +1,67 @@
+//
+//  GamesDetailViewModel.swift
+//  GamesApp
+//
+//  Created by Emre Yeşilyurt on 21.03.2025.
+//
+
+import Foundation
+
+struct GameDetailViewModelItem {
+    let id: Int
+    let title: String
+    let description: String
+    let redditURL: String
+    let websiteURL: String
+    let imageURL: String
+}
+
+class GameDetailViewModel {
+    
+    private(set) var gameDetailItem: GameDetailViewModelItem?
+    var onDataFetched: (() -> Void)?
+    
+    func fetchGameDetail(gameId: Int) {
+        APIService.shared.fetchGameDetails(gameId: gameId) { [weak self] result in
+            switch result {
+            case .success(let gameDetail):
+                let item = GameDetailViewModelItem(
+                    id: gameDetail.id,
+                    title: gameDetail.name,
+                    description: gameDetail.description,
+                    redditURL: gameDetail.reddit ?? "",
+                    websiteURL: gameDetail.website ?? "",
+                    imageURL: gameDetail.background_image ?? ""
+                )
+                self?.gameDetailItem = item
+                self?.onDataFetched?()
+                
+            case .failure(let error):
+                print("Game Detail Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func cleanHTMLTags(from htmlString: String) -> String {
+        if let data = htmlString.data(using: .utf8) {
+            do {
+                let attributedString = try NSAttributedString(data: data,
+                                                              options: [.documentType: NSAttributedString.DocumentType.html],
+                                                              documentAttributes: nil)
+                return attributedString.string
+            } catch {
+                print("Error cleaning HTML tags: \(error.localizedDescription)")
+            }
+        }
+        return htmlString
+    }
+    
+    func getShortenedDescription(_ description: String, maxLength: Int = 100) -> String {
+        if description.count > maxLength {
+            let shortened = description.prefix(maxLength) + "..."
+            return String(shortened)
+        } else {
+            return description
+        }
+    }
+}
