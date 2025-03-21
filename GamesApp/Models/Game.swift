@@ -17,6 +17,7 @@ struct Game: Decodable {
     let background_image: String?
     let metacritic: Int?
     let genres: [Genre]
+    let description: String?
 }
 
 struct Genre: Decodable {

@@ -12,6 +12,7 @@ class GamesVC: UIViewController {
     
     private let viewModel = GamesViewModel()
     private let tableView = UITableView()
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class GamesVC: UIViewController {
     private func setupTableView() {
         tableView.register(GameCell.self, forCellReuseIdentifier: GameCell.identifier)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.rowHeight = 136
         tableView.separatorStyle = .none
         view.addSubview(tableView)
@@ -44,7 +46,7 @@ class GamesVC: UIViewController {
     }
 }
 
-extension GamesVC: UITableViewDataSource {
+extension GamesVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfGames
     }
@@ -54,6 +56,14 @@ extension GamesVC: UITableViewDataSource {
         let game = viewModel.game(at: indexPath.row)
         cell.configure(with: game)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedGame = viewModel.game(at: indexPath.row)
+        let detailVC = GamesDetailVC()
+        detailVC.hidesBottomBarWhenPushed = true
+        detailVC.gameId = selectedGame.id
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 

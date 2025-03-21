@@ -8,6 +8,7 @@
 import Foundation
 
 struct GameViewModelItem {
+    let id: Int
     let title: String
     let metacritic: String
     let genres: String
@@ -34,6 +35,7 @@ class GamesViewModel {
                 self?.games = games
                 self?.gameItems = games.map {
                     GameViewModelItem(
+                        id: $0.id,
                         title: $0.name,
                         metacritic: String($0.metacritic ?? 0),
                         genres: $0.genres.map { $0.name }.joined(separator: ", "),

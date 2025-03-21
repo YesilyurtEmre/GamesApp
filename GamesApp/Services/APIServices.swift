@@ -26,4 +26,19 @@ class APIService {
                 }
             }
     }
+    
+    func fetchGameDetails(gameId: Int, completion: @escaping (Result<GameDetail, Error>) -> Void) {
+        let url = "\(EndPoint.baseURL)/games/\(gameId)?key=\(EndPoint.apiKey)"
+        
+        AF.request(url)
+            .validate()
+            .responseDecodable(of: GameDetail.self) { response  in
+                switch response.result {
+                case .success(let gameDetail):
+                    completion(.success(gameDetail))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
 }
