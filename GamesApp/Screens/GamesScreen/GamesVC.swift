@@ -9,18 +9,39 @@ import UIKit
 import SnapKit
 
 class GamesVC: UIViewController {
-    
     private let viewModel = GamesViewModel()
     private let tableView = UITableView()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var filteredGames: [GameViewModelItem] = []
+    
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupSearchController()
         setupTableView()
         setupConstraints()
         fetchGames()
         setupBindings()
+    }
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search for the games"
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.tintColor = .primaryBlack
+        
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     private func setupBindings() {
@@ -61,26 +82,44 @@ class GamesVC: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+    
+    private func filterContentForSearchText(_ searchText: String) {
+        filteredGames = viewModel.gameItems.filter { game in
+            return game.title.lowercased().contains(searchText.lowercased())
+        }
+        
+        tableView.reloadData()
+    }
 }
 
 extension GamesVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfGames
+        if isFiltering && filteredGames.isEmpty {
+            return 0
+        }
+        return isFiltering ? filteredGames.count : viewModel.numberOfGames
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GameCell.identifier, for: indexPath) as! GameCell
-        let game = viewModel.game(at: indexPath.row)
+        let game = isFiltering ? filteredGames[indexPath.row] : viewModel.game(at: indexPath.row)
         cell.configure(with: game)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedGame = viewModel.game(at: indexPath.row)
+        let selectedGame = isFiltering ? filteredGames[indexPath.row] : viewModel.game(at: indexPath.row)
         let detailVC = GamesDetailVC()
         detailVC.hidesBottomBarWhenPushed = true
         detailVC.gameId = selectedGame.id
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+extension GamesVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text ?? ""
+        filterContentForSearchText(searchText)
     }
 }
 
