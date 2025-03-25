@@ -87,28 +87,31 @@ class GameCell: UITableViewCell {
     
     func configure(with game: GameViewModelItem) {
         titleLabel.text = game.title
-        
-        let metacriticText = "metacritic: \(game.metacritic)"
-        let metacriticAttributedString = NSMutableAttributedString(string: metacriticText)
-        
-        if let range = metacriticText.range(of: "metacritic: ") {
-            let nsRange = NSRange(range, in: metacriticText)
-            metacriticAttributedString.addAttribute(.foregroundColor, value: UIColor.primaryBlack, range: nsRange)
-        }
-        
-        if let range = metacriticText.range(of: game.metacritic) {
-            let nsRange = NSRange(range, in: metacriticText)
-            metacriticAttributedString.addAttribute(.foregroundColor, value: UIColor.rateColor, range: nsRange)
-            metacriticAttributedString.addAttribute(.font, value: UIFont.robotoBold(ofSize: 18), range: nsRange)
-        }
-        
-        metacriticLabel.attributedText = metacriticAttributedString
-        
+        metacriticLabel.attributedText = formattedMetacriticText(for: game.metacritic)
         genreLabel.text = game.genres
         
         if let url = URL(string: game.imageURL) {
             gameImageView.loadImage(from: url)
         }
     }
+    
+    private func formattedMetacriticText(for score: String) -> NSAttributedString {
+        let metacriticText = "metacritic: \(score)"
+        let attributedString = NSMutableAttributedString(string: metacriticText)
+        
+        if let range = metacriticText.range(of: "metacritic: ") {
+            let nsRange = NSRange(range, in: metacriticText)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.primaryBlack, range: nsRange)
+        }
+        
+        if let range = metacriticText.range(of: score) {
+            let nsRange = NSRange(range, in: metacriticText)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.rateColor, range: nsRange)
+            attributedString.addAttribute(.font, value: UIFont.robotoBold(ofSize: 18), range: nsRange)
+        }
+        
+        return attributedString
+    }
+    
     
 }

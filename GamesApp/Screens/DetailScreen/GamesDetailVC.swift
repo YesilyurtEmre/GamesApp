@@ -30,13 +30,14 @@ class GamesDetailVC: UIViewController {
         setupViews()
         setupConstraints()
         bindViewModel()
-        
-        if let id = gameId {
-            viewModel.fetchGameDetail(gameId: id)
-        }
-        
+        fetchGameDetail()
         navigationItem.largeTitleDisplayMode = .never
         
+    }
+    
+    private func fetchGameDetail() {
+        guard let id = gameId else { return }
+        viewModel.fetchGameDetail(gameId: id)
     }
     
     private func bindViewModel() {
@@ -78,12 +79,10 @@ class GamesDetailVC: UIViewController {
         descriptionLabel.numberOfLines = 0
         view.addSubview(descriptionLabel)
         
-        redditLabel.text = "Visit reddit"
         redditLabel.font = UIFont.systemFont(ofSize: 17)
         redditLabel.textColor = .black
         view.addSubview(redditLabel)
         
-        websiteLabel.text = "Visit website"
         websiteLabel.font = UIFont.systemFont(ofSize: 17)
         websiteLabel.textColor = .black
         view.addSubview(websiteLabel)
@@ -123,11 +122,4 @@ class GamesDetailVC: UIViewController {
         }
     }
     
-    func configure(with game: GameDetail) {
-        titleLabel.text = game.name
-        descriptionLabel.text = game.description
-        gameImageView.sd_setImage(with: URL(string: game.background_image ?? ""))
-        redditLabel.text = "Visit reddit"
-        websiteLabel.text = "Visit website"
-    }
 }

@@ -12,7 +12,7 @@ class GamesVC: UIViewController {
     
     private let viewModel = GamesViewModel()
     private let tableView = UITableView()
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +20,31 @@ class GamesVC: UIViewController {
         setupTableView()
         setupConstraints()
         fetchGames()
+        setupBindings()
     }
     
-    private func fetchGames() {
-        viewModel.fetchGames { [weak self] in
+    private func setupBindings() {
+        viewModel.onGamesFetched = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
+        
+        viewModel.onError = { [weak self] errorMessage in
+            DispatchQueue.main.async {
+                self?.showErrorAlert(errorMessage)
+            }
+        }
+    }
+    
+    private func fetchGames() {
+        viewModel.fetchGames()
+    }
+    
+    private func showErrorAlert(_ message: String) {
+        let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+        present(alert, animated: true)
     }
     
     private func setupTableView() {

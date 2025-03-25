@@ -24,11 +24,14 @@ class GamesViewModel {
         return gameItems.count
     }
     
+    var onGamesFetched: (() -> Void)?
+    var onError: ((String) -> Void)?
+    
     func game(at index: Int) -> GameViewModelItem {
         return gameItems[index]
     }
     
-    func fetchGames(completion: @escaping () -> Void) {
+    func fetchGames() {
         APIService.shared.fetchGames { [weak self] result in
             switch result {
             case .success(let games):
@@ -42,10 +45,9 @@ class GamesViewModel {
                         imageURL: $0.background_image ?? ""
                     )
                 }
-                completion()
+                self?.onGamesFetched?()
             case .failure(let error):
-                print("Fetch games error: \(error.localizedDescription)")
-                completion()
+                self?.onError?(error.localizedDescription)
             }
         }
     }
