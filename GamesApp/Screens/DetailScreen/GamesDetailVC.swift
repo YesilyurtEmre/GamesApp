@@ -85,8 +85,9 @@ class GamesDetailVC: UIViewController {
         descriptionTextView.font = UIFont.robotoLight(ofSize: 15)
         descriptionTextView.textColor = .darkGrayText
         descriptionTextView.isEditable = false
-        descriptionTextView.isScrollEnabled = true
-        descriptionTextView.textContainerInset = .zero
+        descriptionTextView.isScrollEnabled = false
+        descriptionTextView.isSelectable = false
+        descriptionTextView.textContainer.lineBreakMode = .byWordWrapping
         contentView.addSubview(descriptionTextView)
         
         redditButton.setTitleColor(.darkGrayText, for: .normal)
@@ -130,7 +131,7 @@ class GamesDetailVC: UIViewController {
         descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(descriptionTitleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.height.greaterThanOrEqualTo(100)
+            make.bottom.equalTo(redditButton.snp.top).offset(-24)
         }
         
         redditButton.snp.makeConstraints { make in

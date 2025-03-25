@@ -84,10 +84,7 @@ class GamesVC: UIViewController {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        filteredGames = viewModel.gameItems.filter { game in
-            return game.title.lowercased().contains(searchText.lowercased())
-        }
-        
+        filteredGames = viewModel.filterGames(by: searchText)
         tableView.reloadData()
     }
 }

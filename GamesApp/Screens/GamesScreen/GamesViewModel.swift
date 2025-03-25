@@ -20,12 +20,14 @@ class GamesViewModel {
     private var games: [Game] = []
     private(set) var gameItems: [GameViewModelItem] = []
     
+    var onGamesFetched: (() -> Void)?
+    var onError: ((String) -> Void)?
+    var onFavoritesChanged: (() -> Void)?
+    
     var numberOfGames: Int {
         return gameItems.count
     }
     
-    var onGamesFetched: (() -> Void)?
-    var onError: ((String) -> Void)?
     
     func game(at index: Int) -> GameViewModelItem {
         return gameItems[index]
@@ -50,5 +52,25 @@ class GamesViewModel {
                 self?.onError?(error.localizedDescription)
             }
         }
+    }
+    
+    func filterGames(by searchText: String) -> [GameViewModelItem] {
+        return gameItems.filter { game in
+            return game.title.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
+    func addToFavorites(game: Game) {
+        CoreDataManager.shared.addToFavorites(game: game)
+        onFavoritesChanged?()
+    }
+    
+    func isFavorite(id: Int) -> Bool {
+        return CoreDataManager.shared.isFavorite(id: String(id))
+    }
+    
+    func removeFromFavorites(id: Int) {
+        CoreDataManager.shared.removeFromFavorites(id: String(id))
+        onFavoritesChanged?()
     }
 }

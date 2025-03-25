@@ -55,13 +55,4 @@ class GameDetailViewModel {
         }
         return htmlString
     }
-    
-    func getShortenedDescription(_ description: String, maxLength: Int = 100) -> String {
-        if description.count > maxLength {
-            let shortened = description.prefix(maxLength) + "..."
-            return String(shortened)
-        } else {
-            return description
-        }
-    }
 }
