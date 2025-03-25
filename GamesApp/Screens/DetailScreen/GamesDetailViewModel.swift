@@ -42,7 +42,7 @@ class GameDetailViewModel {
         }
     }
     
-    private func cleanHTMLTags(from htmlString: String) -> String {
+    func cleanHTMLTags(from htmlString: String) -> String {
         if let data = htmlString.data(using: .utf8) {
             do {
                 let attributedString = try NSAttributedString(data: data,

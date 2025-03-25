@@ -21,7 +21,7 @@ class GameCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.robotoBold(ofSize: 20)
-        label.textColor = UIColor.titleColor
+        label.textColor = .titleColor
         return label
     }()
     
@@ -34,7 +34,7 @@ class GameCell: UITableViewCell {
     private let genreLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.robotoLight(ofSize: 13)
-        label.textColor = UIColor.genreColor
+        label.textColor = .genreColor
         return label
     }()
     

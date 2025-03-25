@@ -13,12 +13,14 @@ class GamesDetailVC: UIViewController {
     
     // MARK: - UI Elements
     
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     private let gameImageView = UIImageView()
     private let titleLabel = UILabel()
     private let descriptionTitleLabel = UILabel()
-    private let descriptionLabel = UILabel()
-    private let redditLabel = UILabel()
-    private let websiteLabel = UILabel()
+    private let descriptionTextView = UITextView()
+    private let redditButton = UIButton()
+    private let websiteButton = UIButton()
     
     let viewModel = GameDetailViewModel()
     var gameId: Int?
@@ -52,45 +54,64 @@ class GamesDetailVC: UIViewController {
         guard let item = viewModel.gameDetailItem else { return }
         
         titleLabel.text = item.title
-        descriptionLabel.text = viewModel.getShortenedDescription(item.description)
+        descriptionTextView.text = viewModel.cleanHTMLTags(from: item.description)
+        descriptionTextView.sizeToFit()
         gameImageView.sd_setImage(with: URL(string: item.imageURL))
-        redditLabel.text = "Visit reddit: \(item.redditURL)"
-        websiteLabel.text = "Visit website: \(item.websiteURL)"
+        redditButton.setTitle("Visit Reddit", for: .normal)
+        websiteButton.setTitle("Visit Website", for: .normal)
+        redditButton.accessibilityValue = item.redditURL
+        websiteButton.accessibilityValue = item.websiteURL
     }
     
     private func setupViews() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
         gameImageView.contentMode = .scaleToFill
         gameImageView.clipsToBounds = true
-        view.addSubview(gameImageView)
+        contentView.addSubview(gameImageView)
         
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 28)
+        titleLabel.font = UIFont.robotoBold(ofSize: 36)
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
-        view.addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         
         descriptionTitleLabel.text = "Game Description"
-        descriptionTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        descriptionTitleLabel.textColor = .black
-        view.addSubview(descriptionTitleLabel)
+        descriptionTitleLabel.font = UIFont.robotoRegular(ofSize: 19)
+        descriptionTitleLabel.textColor = .primaryBlack
+        contentView.addSubview(descriptionTitleLabel)
         
-        descriptionLabel.font = UIFont.systemFont(ofSize: 15)
-        descriptionLabel.textColor = .darkGray
-        descriptionLabel.numberOfLines = 0
-        view.addSubview(descriptionLabel)
+        descriptionTextView.font = UIFont.robotoLight(ofSize: 15)
+        descriptionTextView.textColor = .darkGrayText
+        descriptionTextView.isEditable = false
+        descriptionTextView.isScrollEnabled = true
+        descriptionTextView.textContainerInset = .zero
+        contentView.addSubview(descriptionTextView)
         
-        redditLabel.font = UIFont.systemFont(ofSize: 17)
-        redditLabel.textColor = .black
-        view.addSubview(redditLabel)
+        redditButton.setTitleColor(.darkGrayText, for: .normal)
+        redditButton.contentHorizontalAlignment = .left
+        redditButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        contentView.addSubview(redditButton)
         
-        websiteLabel.font = UIFont.systemFont(ofSize: 17)
-        websiteLabel.textColor = .black
-        view.addSubview(websiteLabel)
+        websiteButton.setTitleColor(.darkGrayText, for: .normal)
+        websiteButton.contentHorizontalAlignment = .left
+        websiteButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        contentView.addSubview(websiteButton)
     }
     
     private func setupConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(scrollView)
+        }
+        
         gameImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(contentView)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(view.snp.height).multipliedBy(0.35)
         }
@@ -106,19 +127,21 @@ class GamesDetailVC: UIViewController {
             make.leading.equalToSuperview().inset(16)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
+        descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(descriptionTitleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
+            make.height.greaterThanOrEqualTo(100)
         }
         
-        redditLabel.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(24)
+        redditButton.snp.makeConstraints { make in
+            make.top.equalTo(descriptionTextView.snp.bottom).offset(24)
             make.leading.equalToSuperview().inset(16)
         }
         
-        websiteLabel.snp.makeConstraints { make in
-            make.top.equalTo(redditLabel.snp.bottom).offset(16)
+        websiteButton.snp.makeConstraints { make in
+            make.top.equalTo(redditButton.snp.bottom).offset(16)
             make.leading.equalToSuperview().inset(16)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-16)
         }
     }
     
