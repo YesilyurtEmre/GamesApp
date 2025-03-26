@@ -7,9 +7,19 @@
 
 import Foundation
 
-struct Game {
-    let title: String
-    let metacriticScore: Int
-    let genre: String
-    let imageName: String
+struct GameResponse: Decodable {
+    let results: [Game]
+}
+
+struct Game: Decodable {
+    let id: Int
+    let name: String
+    let background_image: String?
+    let metacritic: Int?
+    let genres: [Genre]
+    let description: String?
+}
+
+struct Genre: Decodable {
+    let name: String
 }

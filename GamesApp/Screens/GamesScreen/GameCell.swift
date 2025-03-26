@@ -13,29 +13,28 @@ class GameCell: UITableViewCell {
     
     private let gameImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = UIColor.titleColor
+        label.font = UIFont.robotoBold(ofSize: 20)
+        label.textColor = .titleColor
         return label
     }()
     
     private let metacriticLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.rateColor
+        label.font = UIFont.robotoBold(ofSize: 14)
         return label
     }()
     
     private let genreLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.genreColor
+        label.font = UIFont.robotoLight(ofSize: 13)
+        label.textColor = .genreColor
         return label
     }()
     
@@ -86,10 +85,33 @@ class GameCell: UITableViewCell {
         }
     }
     
-    func configure(with game: Game) {
+    func configure(with game: GameViewModelItem) {
         titleLabel.text = game.title
-        metacriticLabel.text = "Metacritic: \(game.metacriticScore)"
-        genreLabel.text = game.genre
-        gameImageView.image = UIImage(named: game.imageName)
+        metacriticLabel.attributedText = formattedMetacriticText(for: game.metacritic)
+        genreLabel.text = game.genres
+        
+        if let url = URL(string: game.imageURL) {
+            gameImageView.loadImage(from: url)
+        }
     }
+    
+    private func formattedMetacriticText(for score: String) -> NSAttributedString {
+        let metacriticText = "metacritic: \(score)"
+        let attributedString = NSMutableAttributedString(string: metacriticText)
+        
+        if let range = metacriticText.range(of: "metacritic: ") {
+            let nsRange = NSRange(range, in: metacriticText)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.primaryBlack, range: nsRange)
+        }
+        
+        if let range = metacriticText.range(of: score) {
+            let nsRange = NSRange(range, in: metacriticText)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.rateColor, range: nsRange)
+            attributedString.addAttribute(.font, value: UIFont.robotoBold(ofSize: 18), range: nsRange)
+        }
+        
+        return attributedString
+    }
+    
+    
 }
