@@ -74,7 +74,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6F86A0662D89EF620038D201 /* Build configuration list for PBXNativeTarget "GamesApp" */;
 			buildPhases = (
-				6FCF82AE2D8C53220035B234 /* ShellScript */,
 				6F86A04F2D89EF610038D201 /* Sources */,
 				6F86A0502D89EF610038D201 /* Frameworks */,
 				6F86A0512D89EF610038D201 /* Resources */,
@@ -144,26 +143,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		6FCF82AE2D8C53220035B234 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6F86A04F2D89EF610038D201 /* Sources */ = {

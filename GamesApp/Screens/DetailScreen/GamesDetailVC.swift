@@ -50,6 +50,16 @@ class GamesDetailVC: UIViewController {
         }
     }
     
+    private var divider1 = UIView()
+    private var divider2 = UIView()
+    private var divider3 = UIView()
+    
+    private func createDivider() -> UIView {
+        let divider = UIView()
+        divider.backgroundColor = .lightGray
+        return divider
+    }
+    
     private func configureView() {
         guard let item = viewModel.gameDetailItem else { return }
         
@@ -90,15 +100,25 @@ class GamesDetailVC: UIViewController {
         descriptionTextView.textContainer.lineBreakMode = .byWordWrapping
         contentView.addSubview(descriptionTextView)
         
+        divider1 = createDivider()
+        divider2 = createDivider()
+        divider3 = createDivider()
+        
+        contentView.addSubview(divider1)
+        
         redditButton.setTitleColor(.darkGrayText, for: .normal)
         redditButton.contentHorizontalAlignment = .left
         redditButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         contentView.addSubview(redditButton)
         
+        contentView.addSubview(divider2)
+        
         websiteButton.setTitleColor(.darkGrayText, for: .normal)
         websiteButton.contentHorizontalAlignment = .left
         websiteButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         contentView.addSubview(websiteButton)
+        
+        contentView.addSubview(divider3)
     }
     
     private func setupConstraints() {
@@ -134,15 +154,33 @@ class GamesDetailVC: UIViewController {
             make.bottom.equalTo(redditButton.snp.top).offset(-24)
         }
         
+        divider1.snp.makeConstraints { make in
+            make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
+        }
+        
         redditButton.snp.makeConstraints { make in
             make.top.equalTo(descriptionTextView.snp.bottom).offset(24)
             make.leading.equalToSuperview().inset(16)
+        }
+        
+        divider2.snp.makeConstraints { make in
+            make.top.equalTo(redditButton.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
         }
         
         websiteButton.snp.makeConstraints { make in
             make.top.equalTo(redditButton.snp.bottom).offset(16)
             make.leading.equalToSuperview().inset(16)
             make.bottom.equalTo(contentView.snp.bottom).offset(-16)
+        }
+        
+        divider3.snp.makeConstraints { make in
+            make.top.equalTo(websiteButton.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
         }
     }
     

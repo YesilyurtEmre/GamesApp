@@ -39,7 +39,6 @@ class GamesVC: UIViewController {
         searchController.searchBar.placeholder = "Search for the games"
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.tintColor = .primaryBlack
-        
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
