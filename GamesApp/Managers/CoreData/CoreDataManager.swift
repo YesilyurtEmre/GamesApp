@@ -38,7 +38,6 @@ class CoreDataManager {
 
 extension CoreDataManager {
     
-    // GameViewModelItem ile favoriye ekleme fonksiyonu
     func addToFavorites(gameItem: GameViewModelItem) {
         let favoriteGame = FavouriteGame(context: context)
         favoriteGame.id = Int32(gameItem.id)

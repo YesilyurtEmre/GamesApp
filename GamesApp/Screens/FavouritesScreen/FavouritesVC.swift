@@ -41,7 +41,8 @@ class FavouritesVC: UIViewController {
         
         viewModel.onError = { [weak self] errorMessage in
             DispatchQueue.main.async {
-                self?.showErrorAlert(message: errorMessage)
+                guard let self = self else { return }
+                AlertManager.shared.showErrorAlert(on: self, message: errorMessage)
             }
         }
     }
@@ -85,11 +86,6 @@ class FavouritesVC: UIViewController {
         tableView.backgroundView = nil
     }
     
-    private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
 }
 
 extension FavouritesVC: UITableViewDataSource, UITableViewDelegate {

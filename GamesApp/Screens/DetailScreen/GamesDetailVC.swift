@@ -64,6 +64,7 @@ class GamesDetailVC: UIViewController {
             return
         }
         CoreDataManager.shared.addToFavorites(gameItem: game)
+        AlertManager.shared.showFavoriteAddedAlert(on: self, gameName: game.title)
     }
     
     private var divider1 = UIView()

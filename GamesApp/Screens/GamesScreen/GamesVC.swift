@@ -52,19 +52,14 @@ class GamesVC: UIViewController {
         
         viewModel.onError = { [weak self] errorMessage in
             DispatchQueue.main.async {
-                self?.showErrorAlert(errorMessage)
+                guard let self = self else { return }
+                AlertManager.shared.showErrorAlert(on: self, message: errorMessage)
             }
         }
     }
     
     private func fetchGames() {
         viewModel.fetchGames()
-    }
-    
-    private func showErrorAlert(_ message: String) {
-        let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
-        present(alert, animated: true)
     }
     
     private func setupTableView() {
