@@ -58,9 +58,7 @@ class GamesDetailVC: UIViewController {
     }
     
     @objc private func favouriteButtonTapped() {
-        print("Favourite Button Tapped!")
         guard let game = gameItem else {
-            print("Game item is nil!")
             return
         }
         CoreDataManager.shared.addToFavorites(gameItem: game)
