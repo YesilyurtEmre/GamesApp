@@ -76,7 +76,8 @@ class FavouritesVC: UIViewController {
         let label = UILabel()
         label.text = "There is no favourites found."
         label.textAlignment = .center
-        label.textColor = .gray
+        label.font = UIFont.robotoBold(ofSize: 18)
+        label.textColor = .descriptionColor
         tableView.backgroundView = label
     }
     
@@ -101,5 +102,24 @@ extension FavouritesVC: UITableViewDataSource, UITableViewDelegate {
         cell.configure(with: viewModel.favouriteGame(at: indexPath.row))
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completionHandler in
+            guard let self = self else { return }
+            
+            let game = self.viewModel.favouriteGame(at: indexPath.row)
+            self.viewModel.deleteFavourite(game: game)
+            
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+            
+            completionHandler(true)
+        }
+        
+        deleteAction.backgroundColor = .red
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
     
 }

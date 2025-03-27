@@ -35,4 +35,10 @@ class FavouritesViewModel {
     func isEmpty() -> Bool {
         return favouriteGames.isEmpty
     }
+    
+    func deleteFavourite(game: FavouriteGame) {
+        let gameId = game.id
+        CoreDataManager.shared.removeFromFavorites(id: gameId)
+        fetchFavourites()
+    }
 }

@@ -63,11 +63,7 @@ class GamesDetailVC: UIViewController {
             print("Game item is nil!")
             return
         }
-//        if CoreDataManager.shared.isFavorite(id: Int32(game.id)) {
-//            CoreDataManager.shared.removeFromFavorites(id: Int32(game.id))
-//        } else {
-            CoreDataManager.shared.addToFavorites(gameItem: game)
-//        }
+        CoreDataManager.shared.addToFavorites(gameItem: game)
     }
     
     private var divider1 = UIView()
