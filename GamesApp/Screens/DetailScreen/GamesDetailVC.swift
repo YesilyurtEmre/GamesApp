@@ -23,6 +23,7 @@ class GamesDetailVC: UIViewController {
     private let websiteButton = UIButton()
     
     let viewModel = GameDetailViewModel()
+    var gameItem: GameViewModelItem?
     var gameId: Int?
     
     
@@ -33,6 +34,7 @@ class GamesDetailVC: UIViewController {
         setupConstraints()
         bindViewModel()
         fetchGameDetail()
+        setupFavouriteButton()
         navigationItem.largeTitleDisplayMode = .never
         
     }
@@ -48,6 +50,24 @@ class GamesDetailVC: UIViewController {
                 self?.configureView()
             }
         }
+    }
+    
+    private func setupFavouriteButton() {
+        let favouriteButton = UIBarButtonItem(title: "Favourite", style: .plain, target: self, action: #selector(favouriteButtonTapped))
+        navigationItem.rightBarButtonItem = favouriteButton
+    }
+    
+    @objc private func favouriteButtonTapped() {
+        print("Favourite Button Tapped!")
+        guard let game = gameItem else {
+            print("Game item is nil!")
+            return
+        }
+//        if CoreDataManager.shared.isFavorite(id: Int32(game.id)) {
+//            CoreDataManager.shared.removeFromFavorites(id: Int32(game.id))
+//        } else {
+            CoreDataManager.shared.addToFavorites(gameItem: game)
+//        }
     }
     
     private var divider1 = UIView()

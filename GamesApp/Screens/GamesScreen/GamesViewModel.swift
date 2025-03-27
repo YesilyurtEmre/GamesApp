@@ -60,17 +60,17 @@ class GamesViewModel {
         }
     }
     
-    func addToFavorites(game: Game) {
-        CoreDataManager.shared.addToFavorites(game: game)
+    func addToFavorites(gameItem: GameViewModelItem) {
+        CoreDataManager.shared.addToFavorites(gameItem: gameItem)
         onFavoritesChanged?()
     }
     
     func isFavorite(id: Int) -> Bool {
-        return CoreDataManager.shared.isFavorite(id: String(id))
+        return CoreDataManager.shared.isFavorite(id: Int32(id))
     }
     
     func removeFromFavorites(id: Int) {
-        CoreDataManager.shared.removeFromFavorites(id: String(id))
+        CoreDataManager.shared.removeFromFavorites(id: Int32(id))
         onFavoritesChanged?()
     }
 }

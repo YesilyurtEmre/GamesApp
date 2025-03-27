@@ -108,6 +108,7 @@ extension GamesVC: UITableViewDataSource, UITableViewDelegate {
         let detailVC = GamesDetailVC()
         detailVC.hidesBottomBarWhenPushed = true
         detailVC.gameId = selectedGame.id
+        detailVC.gameItem = selectedGame
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

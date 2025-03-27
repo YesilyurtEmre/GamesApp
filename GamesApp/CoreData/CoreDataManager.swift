@@ -38,15 +38,21 @@ class CoreDataManager {
 
 extension CoreDataManager {
     
-    func addToFavorites(game: Game) {
+    // GameViewModelItem ile favoriye ekleme fonksiyonu
+    func addToFavorites(gameItem: GameViewModelItem) {
         let favoriteGame = FavouriteGame(context: context)
-        favoriteGame.id =  UUID(uuidString: String(game.id)) ?? UUID()
-        favoriteGame.name = game.name
-        favoriteGame.imageURL = game.background_image
-        favoriteGame.genres = game.genres.map { $0.name }.joined(separator: ", ")
-        favoriteGame.metacritic = Int16(game.metacritic ?? 0)
+        favoriteGame.id = Int32(gameItem.id)
+        favoriteGame.name = gameItem.title
+        favoriteGame.imageURL = gameItem.imageURL
+        favoriteGame.genres = gameItem.genres
+        favoriteGame.metacritic = gameItem.metacritic
         
-        saveContext()
+        do {
+            try context.save()
+            print("\(gameItem.title) favorilere eklendi.")
+        } catch {
+            print("Core Data save error: \(error)")
+        }
     }
     
     func getFavoriteGames() -> [FavouriteGame] {
@@ -59,9 +65,9 @@ extension CoreDataManager {
         }
     }
     
-    func removeFromFavorites(id: String) {
+    func removeFromFavorites(id: Int32) {
         let fetchRequest: NSFetchRequest<FavouriteGame> = FavouriteGame.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
         
         do {
             let games = try context.fetch(fetchRequest)
@@ -74,9 +80,9 @@ extension CoreDataManager {
         }
     }
     
-    func isFavorite(id: String) -> Bool {
+    func isFavorite(id: Int32) -> Bool {
         let fetchRequest: NSFetchRequest<FavouriteGame> = FavouriteGame.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
         
         do {
             let count = try context.count(for: fetchRequest)
@@ -87,4 +93,6 @@ extension CoreDataManager {
         }
     }
 }
+
+
 
