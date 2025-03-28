@@ -134,6 +134,46 @@ class GamesDetailVC: UIViewController {
         contentView.addSubview(websiteButton)
         
         contentView.addSubview(divider3)
+        
+        redditButton.addTarget(self, action: #selector(openReddit), for: .touchUpInside)
+        websiteButton.addTarget(self, action: #selector(openWebsite), for: .touchUpInside)
+    }
+    
+    @objc private func openReddit() {
+        guard let urlString = redditButton.accessibilityValue,
+              viewModel.isValidURL(urlString) else {
+            AlertManager.shared.showErrorAlert(on: self, message: "Invalid Reddit URL")
+            return
+        }
+        
+        guard let url = URL(string: urlString) else {
+            AlertManager.shared.showErrorAlert(on: self, message: "Invalid Reddit URL")
+            return
+        }
+        openInSafari(url: url)
+    }
+    
+    @objc private func openWebsite() {
+        guard let urlString = websiteButton.accessibilityValue,
+              viewModel.isValidURL(urlString) else {
+            AlertManager.shared.showErrorAlert(on: self, message: "Invalid Website URL")
+            return
+        }
+        
+        guard let url = URL(string: urlString) else {
+            AlertManager.shared.showErrorAlert(on: self, message: "Invalid Website URL")
+            return
+        }
+        openInSafari(url: url)
+        
+    }
+    
+    private func openInSafari(url: URL) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            AlertManager.shared.showErrorAlert(on: self, message: "Cannot open the URL")
+        }
     }
     
     private func setupConstraints() {
