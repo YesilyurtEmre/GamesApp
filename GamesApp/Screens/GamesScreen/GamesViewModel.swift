@@ -59,18 +59,4 @@ class GamesViewModel {
             return game.title.lowercased().contains(searchText.lowercased())
         }
     }
-    
-    func addToFavorites(game: Game) {
-        CoreDataManager.shared.addToFavorites(game: game)
-        onFavoritesChanged?()
-    }
-    
-    func isFavorite(id: Int) -> Bool {
-        return CoreDataManager.shared.isFavorite(id: String(id))
-    }
-    
-    func removeFromFavorites(id: Int) {
-        CoreDataManager.shared.removeFromFavorites(id: String(id))
-        onFavoritesChanged?()
-    }
 }

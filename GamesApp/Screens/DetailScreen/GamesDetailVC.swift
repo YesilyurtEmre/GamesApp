@@ -21,8 +21,10 @@ class GamesDetailVC: UIViewController {
     private let descriptionTextView = UITextView()
     private let redditButton = UIButton()
     private let websiteButton = UIButton()
+    private var favouriteButton: UIBarButtonItem!
     
     let viewModel = GameDetailViewModel()
+    var gameItem: GameViewModelItem?
     var gameId: Int?
     
     
@@ -33,6 +35,7 @@ class GamesDetailVC: UIViewController {
         setupConstraints()
         bindViewModel()
         fetchGameDetail()
+        setupFavouriteButton()
         navigationItem.largeTitleDisplayMode = .never
         
     }
@@ -48,6 +51,42 @@ class GamesDetailVC: UIViewController {
                 self?.configureView()
             }
         }
+    }
+    
+    private func setupFavouriteButton() {
+        guard let id = gameId else { return }
+        
+        let title = CoreDataManager.shared.isFavorite(id: Int32(id)) ? "Remove from Favourites" : "Add to Favourites"
+        
+        favouriteButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(favouriteButtonTapped))
+        navigationItem.rightBarButtonItem = favouriteButton
+    }
+    
+    @objc private func favouriteButtonTapped() {
+        guard let game = gameItem, let id = gameId else {
+            print("Game item is nil!")
+            return
+        }
+        
+        if CoreDataManager.shared.isFavorite(id: Int32(id)) {
+            CoreDataManager.shared.removeFromFavorites(id: Int32(id))
+            favouriteButton.title = "Add to Favourites"
+            AlertManager.shared.showFavoriteRemovedAlert(on: self, gameName: game.title)
+        } else {
+            CoreDataManager.shared.addToFavorites(gameItem: game)
+            favouriteButton.title = "Remove from Favourites"
+            AlertManager.shared.showFavoriteAddedAlert(on: self, gameName: game.title)
+        }
+    }
+    
+    private var divider1 = UIView()
+    private var divider2 = UIView()
+    private var divider3 = UIView()
+    
+    private func createDivider() -> UIView {
+        let divider = UIView()
+        divider.backgroundColor = .lightGray
+        return divider
     }
     
     private func configureView() {
@@ -90,15 +129,25 @@ class GamesDetailVC: UIViewController {
         descriptionTextView.textContainer.lineBreakMode = .byWordWrapping
         contentView.addSubview(descriptionTextView)
         
+        divider1 = createDivider()
+        divider2 = createDivider()
+        divider3 = createDivider()
+        
+        contentView.addSubview(divider1)
+        
         redditButton.setTitleColor(.darkGrayText, for: .normal)
         redditButton.contentHorizontalAlignment = .left
         redditButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         contentView.addSubview(redditButton)
         
+        contentView.addSubview(divider2)
+        
         websiteButton.setTitleColor(.darkGrayText, for: .normal)
         websiteButton.contentHorizontalAlignment = .left
         websiteButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         contentView.addSubview(websiteButton)
+        
+        contentView.addSubview(divider3)
     }
     
     private func setupConstraints() {
@@ -134,15 +183,33 @@ class GamesDetailVC: UIViewController {
             make.bottom.equalTo(redditButton.snp.top).offset(-24)
         }
         
+        divider1.snp.makeConstraints { make in
+            make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
+        }
+        
         redditButton.snp.makeConstraints { make in
             make.top.equalTo(descriptionTextView.snp.bottom).offset(24)
             make.leading.equalToSuperview().inset(16)
+        }
+        
+        divider2.snp.makeConstraints { make in
+            make.top.equalTo(redditButton.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
         }
         
         websiteButton.snp.makeConstraints { make in
             make.top.equalTo(redditButton.snp.bottom).offset(16)
             make.leading.equalToSuperview().inset(16)
             make.bottom.equalTo(contentView.snp.bottom).offset(-16)
+        }
+        
+        divider3.snp.makeConstraints { make in
+            make.top.equalTo(websiteButton.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
         }
     }
     

@@ -39,7 +39,6 @@ class GamesVC: UIViewController {
         searchController.searchBar.placeholder = "Search for the games"
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.tintColor = .primaryBlack
-        
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
@@ -53,19 +52,14 @@ class GamesVC: UIViewController {
         
         viewModel.onError = { [weak self] errorMessage in
             DispatchQueue.main.async {
-                self?.showErrorAlert(errorMessage)
+                guard let self = self else { return }
+                AlertManager.shared.showErrorAlert(on: self, message: errorMessage)
             }
         }
     }
     
     private func fetchGames() {
         viewModel.fetchGames()
-    }
-    
-    private func showErrorAlert(_ message: String) {
-        let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
-        present(alert, animated: true)
     }
     
     private func setupTableView() {
@@ -109,6 +103,7 @@ extension GamesVC: UITableViewDataSource, UITableViewDelegate {
         let detailVC = GamesDetailVC()
         detailVC.hidesBottomBarWhenPushed = true
         detailVC.gameId = selectedGame.id
+        detailVC.gameItem = selectedGame
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
