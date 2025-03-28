@@ -21,6 +21,7 @@ class GamesDetailVC: UIViewController {
     private let descriptionTextView = UITextView()
     private let redditButton = UIButton()
     private let websiteButton = UIButton()
+    private var favouriteButton: UIBarButtonItem!
     
     let viewModel = GameDetailViewModel()
     var gameItem: GameViewModelItem?
@@ -53,18 +54,29 @@ class GamesDetailVC: UIViewController {
     }
     
     private func setupFavouriteButton() {
-        let favouriteButton = UIBarButtonItem(title: "Favourite", style: .plain, target: self, action: #selector(favouriteButtonTapped))
+        guard let id = gameId else { return }
+        
+        let title = CoreDataManager.shared.isFavorite(id: Int32(id)) ? "Remove from Favourites" : "Add to Favourites"
+        
+        favouriteButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(favouriteButtonTapped))
         navigationItem.rightBarButtonItem = favouriteButton
     }
     
     @objc private func favouriteButtonTapped() {
-        print("Favourite Button Tapped!")
-        guard let game = gameItem else {
+        guard let game = gameItem, let id = gameId else {
             print("Game item is nil!")
             return
         }
-        CoreDataManager.shared.addToFavorites(gameItem: game)
-        AlertManager.shared.showFavoriteAddedAlert(on: self, gameName: game.title)
+        
+        if CoreDataManager.shared.isFavorite(id: Int32(id)) {
+            CoreDataManager.shared.removeFromFavorites(id: Int32(id))
+            favouriteButton.title = "Add to Favourites"
+            AlertManager.shared.showFavoriteRemovedAlert(on: self, gameName: game.title)
+        } else {
+            CoreDataManager.shared.addToFavorites(gameItem: game)
+            favouriteButton.title = "Remove from Favourites"
+            AlertManager.shared.showFavoriteAddedAlert(on: self, gameName: game.title)
+        }
     }
     
     private var divider1 = UIView()

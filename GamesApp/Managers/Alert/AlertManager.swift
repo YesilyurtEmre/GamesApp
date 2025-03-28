@@ -23,5 +23,12 @@ class AlertManager {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         viewController.present(alert, animated: true)
     }
+    
+    func showFavoriteRemovedAlert(on viewController: UIViewController, gameName: String) {
+        let alert = UIAlertController(title: "Success", message: "\(gameName) has been removed from your favorites!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        viewController.present(alert, animated: true)
+    }
+    
 }
 

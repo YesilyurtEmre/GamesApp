@@ -115,7 +115,7 @@ extension FavouritesVC: UITableViewDataSource, UITableViewDelegate {
         
         deleteAction.backgroundColor = .red
         return UISwipeActionsConfiguration(actions: [deleteAction])
+        
     }
-    
     
 }
