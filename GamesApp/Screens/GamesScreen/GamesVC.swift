@@ -13,6 +13,7 @@ class GamesVC: UIViewController {
     private let tableView = UITableView()
     private let searchController = UISearchController(searchResultsController: nil)
     private var filteredGames: [GameViewModelItem] = []
+    private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
@@ -31,6 +32,13 @@ class GamesVC: UIViewController {
         setupConstraints()
         fetchGames()
         setupBindings()
+        setupLoadingIndicator()
+    }
+    
+    private func setupLoadingIndicator() {
+        loadingIndicator.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 44)
+        loadingIndicator.hidesWhenStopped = true
+        tableView.tableFooterView = loadingIndicator
     }
     
     private func setupSearchController() {
@@ -47,6 +55,10 @@ class GamesVC: UIViewController {
         viewModel.onGamesFetched = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
+                self?.loadingIndicator.stopAnimating()
+            }
+            self?.viewModel.onError = { [weak self] error in
+                self?.loadingIndicator.stopAnimating()
             }
         }
         
@@ -96,6 +108,13 @@ extension GamesVC: UITableViewDataSource, UITableViewDelegate {
         let game = isFiltering ? filteredGames[indexPath.row] : viewModel.game(at: indexPath.row)
         cell.configure(with: game)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.numberOfGames - 3 && !viewModel.isLoading {
+            viewModel.fetchGames()
+            loadingIndicator.startAnimating()
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
