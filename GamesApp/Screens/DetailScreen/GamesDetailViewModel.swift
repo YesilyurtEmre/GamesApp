@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct GameDetailViewModelItem {
     let id: Int
@@ -29,7 +30,7 @@ class GameDetailViewModel {
                     id: gameDetail.id,
                     title: gameDetail.name,
                     description: gameDetail.description,
-                    redditURL: gameDetail.reddit ?? "",
+                    redditURL: gameDetail.redditURL ?? "",
                     websiteURL: gameDetail.website ?? "",
                     imageURL: gameDetail.background_image ?? ""
                 )
@@ -54,5 +55,12 @@ class GameDetailViewModel {
             }
         }
         return htmlString
+    }
+    
+    func isValidURL(_ urlString: String) -> Bool {
+        guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else {
+            return false
+        }
+        return true
     }
 }

@@ -13,5 +13,14 @@ struct GameDetail: Decodable {
     let background_image: String?
     let description: String
     let website: String?
-    let reddit: String?
+    let redditURL: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case background_image
+        case description
+        case website
+        case redditURL = "reddit_url"
+    }
 }
