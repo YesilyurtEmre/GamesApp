@@ -24,21 +24,36 @@ class GamesViewModel {
     var onError: ((String) -> Void)?
     var onFavoritesChanged: (() -> Void)?
     
+    private var currentPage = 1
+    private var isFetching = false
+    
     var numberOfGames: Int {
         return gameItems.count
     }
     
+    var isLoading: Bool = false {
+        didSet {
+        }
+    }
     
     func game(at index: Int) -> GameViewModelItem {
         return gameItems[index]
     }
     
     func fetchGames() {
-        APIService.shared.fetchGames { [weak self] result in
+        guard !isFetching else { return }
+        isFetching = true
+        isLoading = true
+        
+        APIService.shared.fetchGames(page: currentPage) { [weak self] result in
+            guard let self = self else { return }
+            self.isFetching = false
+            self.isLoading = false
+            
             switch result {
             case .success(let games):
-                self?.games = games
-                self?.gameItems = games.map {
+                self.games.append(contentsOf: games)
+                self.gameItems.append(contentsOf: games.map {
                     GameViewModelItem(
                         id: $0.id,
                         title: $0.name,
@@ -46,10 +61,11 @@ class GamesViewModel {
                         genres: $0.genres.map { $0.name }.joined(separator: ", "),
                         imageURL: $0.background_image ?? ""
                     )
-                }
-                self?.onGamesFetched?()
+                })
+                self.currentPage += 1
+                self.onGamesFetched?()
             case .failure(let error):
-                self?.onError?(error.localizedDescription)
+                self.onError?(error.localizedDescription)
             }
         }
     }
