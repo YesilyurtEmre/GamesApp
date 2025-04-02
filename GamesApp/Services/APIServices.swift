@@ -12,8 +12,8 @@ class APIService {
     static let shared = APIService()
     private init() {}
     
-    func fetchGames(completion: @escaping (Result<[Game], Error>) -> Void) {
-        let url = EndPoint.games.url
+    func fetchGames(page: Int, completion: @escaping (Result<[Game], Error>) -> Void) {
+        let url = "\(EndPoint.games.url)&page=\(page)"
         
         AF.request(url)
             .validate()
