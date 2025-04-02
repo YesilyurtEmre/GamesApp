@@ -11,7 +11,6 @@ import UIKit
 class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {}
-    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "GamesModel")
         container.loadPersistentStores { _, error in
@@ -21,11 +20,9 @@ class CoreDataManager {
         }
         return container
     }()
-    
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
-    
     func saveContext() {
         guard context.hasChanges else { return }
         do {
@@ -37,7 +34,6 @@ class CoreDataManager {
 }
 
 extension CoreDataManager {
-    
     func addToFavorites(gameItem: GameViewModelItem) {
         let favoriteGame = FavouriteGame(context: context)
         favoriteGame.id = Int32(gameItem.id)
@@ -45,7 +41,6 @@ extension CoreDataManager {
         favoriteGame.imageURL = gameItem.imageURL
         favoriteGame.genres = gameItem.genres
         favoriteGame.metacritic = gameItem.metacritic
-        
         do {
             try context.save()
             print("\(gameItem.title) favorilere eklendi.")
@@ -53,7 +48,6 @@ extension CoreDataManager {
             print("Core Data save error: \(error)")
         }
     }
-    
     func getFavoriteGames() -> [FavouriteGame] {
         let fetchRequest: NSFetchRequest<FavouriteGame> = FavouriteGame.fetchRequest()
         do {
@@ -63,11 +57,9 @@ extension CoreDataManager {
             return []
         }
     }
-    
     func removeFromFavorites(id: Int32) {
         let fetchRequest: NSFetchRequest<FavouriteGame> = FavouriteGame.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
-        
         do {
             let games = try context.fetch(fetchRequest)
             for game in games {
@@ -78,11 +70,9 @@ extension CoreDataManager {
             print("Favori oyunu silerken hata oluştu: \(error)")
         }
     }
-    
     func isFavorite(id: Int32) -> Bool {
         let fetchRequest: NSFetchRequest<FavouriteGame> = FavouriteGame.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
-        
         do {
             let count = try context.count(for: fetchRequest)
             return count > 0
@@ -92,6 +82,3 @@ extension CoreDataManager {
         }
     }
 }
-
-
-

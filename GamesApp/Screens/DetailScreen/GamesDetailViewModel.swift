@@ -18,10 +18,8 @@ struct GameDetailViewModelItem {
 }
 
 class GameDetailViewModel {
-    
     private(set) var gameDetailItem: GameDetailViewModelItem?
     var onDataFetched: (() -> Void)?
-    
     func fetchGameDetail(gameId: Int) {
         APIService.shared.fetchGameDetails(gameId: gameId) { [weak self] result in
             switch result {
@@ -32,23 +30,23 @@ class GameDetailViewModel {
                     description: gameDetail.description,
                     redditURL: gameDetail.redditURL ?? "",
                     websiteURL: gameDetail.website ?? "",
-                    imageURL: gameDetail.background_image ?? ""
+                    imageURL: gameDetail.backgroundImage ?? ""
                 )
                 self?.gameDetailItem = item
                 self?.onDataFetched?()
-                
             case .failure(let error):
                 print("Game Detail Error: \(error.localizedDescription)")
             }
         }
     }
-    
     func cleanHTMLTags(from htmlString: String) -> String {
         if let data = htmlString.data(using: .utf8) {
             do {
-                let attributedString = try NSAttributedString(data: data,
-                                                              options: [.documentType: NSAttributedString.DocumentType.html],
-                                                              documentAttributes: nil)
+                let attributedString = try NSAttributedString(
+                    data: data,
+                    options: [
+                        .documentType: NSAttributedString.DocumentType.html],
+                    documentAttributes: nil)
                 return attributedString.string
             } catch {
                 print("Error cleaning HTML tags: \(error.localizedDescription)")
@@ -56,7 +54,6 @@ class GameDetailViewModel {
         }
         return htmlString
     }
-    
     func isValidURL(_ urlString: String) -> Bool {
         guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else {
             return false
