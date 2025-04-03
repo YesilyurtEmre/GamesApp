@@ -13,4 +13,3 @@ extension UIImageView {
         self.sd_setImage(with: url, placeholderImage: nil, options: .highPriority, completed: nil)
     }
 }
-
