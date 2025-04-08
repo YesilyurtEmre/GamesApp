@@ -16,6 +16,10 @@ struct GameViewModelItem {
 }
 
 class GamesViewModel {
+    private let service: GameServiceProtocol
+    init(service: GameServiceProtocol) {
+        self.service = service
+    }
     private var games: [Game] = []
     private(set) var gameItems: [GameViewModelItem] = []
     var onGamesFetched: (() -> Void)?

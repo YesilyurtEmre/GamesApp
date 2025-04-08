@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class GamesVC: UIViewController {
-    private let viewModel = GamesViewModel()
+    private let viewModel = GamesViewModel(service: GameService())
     private let tableView = UITableView()
     private let searchController = UISearchController(searchResultsController: nil)
     private var filteredGames: [GameViewModelItem] = []
