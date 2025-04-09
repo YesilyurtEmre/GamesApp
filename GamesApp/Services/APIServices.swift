@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class APIService {
+class APIService: GameServiceProtocol {
     static let shared = APIService()
     private init() {}
     func fetchGames(page: Int, completion: @escaping (Result<[Game], Error>) -> Void) {
