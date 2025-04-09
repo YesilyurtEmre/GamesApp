@@ -12,7 +12,9 @@ class MockGameService: GameServiceProtocol {
     var result: Result<[Game], Error>!
     
     func fetchGames(page: Int, completion: @escaping (Result<[Game], Error>) -> Void) {
-        completion(result)
+        if let result = result {
+            completion(result)
+        }
     }
 }
 
@@ -20,7 +22,6 @@ final class GamesViewModelTests: XCTestCase {
     
     var viewModel: GamesViewModel!
     var mockService: MockGameService!
-    var viewController: GamesVC!
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -53,8 +54,8 @@ final class GamesViewModelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1.0)
         
-        XCTAssertEqual(viewModel.numberOfGames, 20)
-        XCTAssertEqual(viewModel.game(at: 0).title, "Grand Theft Auto V")
+        XCTAssertEqual(viewModel.numberOfGames, 1)
+        XCTAssertEqual(viewModel.game(at: 0).title, "GTA")
     }
     
     func testFetchGamesFailure() throws {

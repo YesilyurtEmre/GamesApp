@@ -41,7 +41,7 @@ class GamesViewModel {
         guard !isFetching else { return }
         isFetching = true
         isLoading = true
-        APIService.shared.fetchGames(page: currentPage) { [weak self] result in
+        service.fetchGames(page: currentPage) { [weak self] result in
             guard let self = self else { return }
             self.isFetching = false
             self.isLoading = false
