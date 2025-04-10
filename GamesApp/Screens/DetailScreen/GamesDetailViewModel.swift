@@ -18,10 +18,14 @@ struct GameDetailViewModelItem {
 }
 
 class GameDetailViewModel {
+    private let gameService: GameServiceProtocol
+    init(gameService: GameServiceProtocol) {
+        self.gameService = gameService
+    }
     private(set) var gameDetailItem: GameDetailViewModelItem?
     var onDataFetched: (() -> Void)?
     func fetchGameDetail(gameId: Int) {
-        APIService.shared.fetchGameDetails(gameId: gameId) { [weak self] result in
+        gameService.fetchGameDetails(gameId: gameId) { [weak self] result in
             switch result {
             case .success(let gameDetail):
                 let item = GameDetailViewModelItem(
@@ -47,7 +51,7 @@ class GameDetailViewModel {
                     options: [
                         .documentType: NSAttributedString.DocumentType.html],
                     documentAttributes: nil)
-                return attributedString.string
+                return attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines)
             } catch {
                 print("Error cleaning HTML tags: \(error.localizedDescription)")
             }

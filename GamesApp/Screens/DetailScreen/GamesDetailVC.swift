@@ -20,7 +20,10 @@ class GamesDetailVC: UIViewController {
     private let redditButton = UIButton()
     private let websiteButton = UIButton()
     private var favouriteButton: UIBarButtonItem!
-    let viewModel = GameDetailViewModel()
+    let viewModel: GameDetailViewModel = {
+        let service = APIService.shared
+        return GameDetailViewModel(gameService: service)
+    }()
     var gameItem: GameViewModelItem?
     var gameId: Int?
     override func viewDidLoad() {
