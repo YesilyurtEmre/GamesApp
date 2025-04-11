@@ -23,6 +23,7 @@ class GamesDetailVC: UIViewController {
     let viewModel = GameDetailViewModel()
     var gameItem: GameViewModelItem?
     var gameId: Int?
+  var isFromFavourites: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -62,7 +63,9 @@ class GamesDetailVC: UIViewController {
         if CoreDataManager.shared.isFavorite(id: Int32(id)) {
             CoreDataManager.shared.removeFromFavorites(id: Int32(id))
             favouriteButton.title = "Add to Favourites"
-            AlertManager.shared.showFavoriteRemovedAlert(on: self, gameName: game.title)
+          AlertManager.shared.showFavoriteRemovedAlert(on: self,
+                                                       gameName: game.title,
+                                                       isFromFavourites: isFromFavourites)
         } else {
             CoreDataManager.shared.addToFavorites(gameItem: game)
             favouriteButton.title = "Remove from Favourites"

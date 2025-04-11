@@ -12,8 +12,19 @@
 		6FE13AB52D8D497B00D45180 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 6FE13AB42D8D497B00D45180 /* SDWebImage */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6F8804B12DA54DB600856A40 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6F86A04B2D89EF610038D201 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6F86A0522D89EF610038D201;
+			remoteInfo = GamesApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		6F86A0532D89EF610038D201 /* GamesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F8804AD2DA54DB600856A40 /* GamesAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -35,6 +46,11 @@
 			path = GamesApp;
 			sourceTree = "<group>";
 		};
+		6F8804AE2DA54DB600856A40 /* GamesAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GamesAppTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +64,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6F8804AA2DA54DB600856A40 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -55,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				6F86A0552D89EF610038D201 /* GamesApp */,
+				6F8804AE2DA54DB600856A40 /* GamesAppTests */,
 				6F86A0542D89EF610038D201 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				6F86A0532D89EF610038D201 /* GamesApp.app */,
+				6F8804AD2DA54DB600856A40 /* GamesAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +121,29 @@
 			productReference = 6F86A0532D89EF610038D201 /* GamesApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6F8804AC2DA54DB600856A40 /* GamesAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F8804B52DA54DB600856A40 /* Build configuration list for PBXNativeTarget "GamesAppTests" */;
+			buildPhases = (
+				6F8804A92DA54DB600856A40 /* Sources */,
+				6F8804AA2DA54DB600856A40 /* Frameworks */,
+				6F8804AB2DA54DB600856A40 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6F8804B22DA54DB600856A40 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6F8804AE2DA54DB600856A40 /* GamesAppTests */,
+			);
+			name = GamesAppTests;
+			packageProductDependencies = (
+			);
+			productName = GamesAppTests;
+			productReference = 6F8804AD2DA54DB600856A40 /* GamesAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -108,6 +156,10 @@
 				TargetAttributes = {
 					6F86A0522D89EF610038D201 = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					6F8804AC2DA54DB600856A40 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 6F86A0522D89EF610038D201;
 					};
 				};
 			};
@@ -132,12 +184,20 @@
 			projectRoot = "";
 			targets = (
 				6F86A0522D89EF610038D201 /* GamesApp */,
+				6F8804AC2DA54DB600856A40 /* GamesAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6F86A0512D89EF610038D201 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6F8804AB2DA54DB600856A40 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -176,7 +236,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6F8804A92DA54DB600856A40 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6F8804B22DA54DB600856A40 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6F86A0522D89EF610038D201 /* GamesApp */;
+			targetProxy = 6F8804B12DA54DB600856A40 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6F86A0672D89EF620038D201 /* Debug */ = {
@@ -358,6 +433,42 @@
 			};
 			name = Release;
 		};
+		6F8804B32DA54DB600856A40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RLTBABHG5N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.emreyesilyurt.GamesAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GamesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GamesApp";
+			};
+			name = Debug;
+		};
+		6F8804B42DA54DB600856A40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RLTBABHG5N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.emreyesilyurt.GamesAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GamesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GamesApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -375,6 +486,15 @@
 			buildConfigurations = (
 				6F86A0672D89EF620038D201 /* Debug */,
 				6F86A0682D89EF620038D201 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6F8804B52DA54DB600856A40 /* Build configuration list for PBXNativeTarget "GamesAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F8804B32DA54DB600856A40 /* Debug */,
+				6F8804B42DA54DB600856A40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
