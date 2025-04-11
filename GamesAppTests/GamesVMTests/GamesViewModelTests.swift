@@ -49,4 +49,28 @@ final class GamesViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
         XCTAssertEqual(receivedError, "Something went wrong")
     }
+    func testFilterGames() {
+        let mockGame1 = Game(id: 1,
+                             name: "GTA",
+                             backgroundImage: "image-url",
+                             metacritic: 90,
+                             genres: [Genre(name: "Action")],
+                             description: "GTA GAME")
+        let mockGame2 = Game(id: 2,
+                             name: "Minecraft",
+                             backgroundImage: "image-url",
+                             metacritic: 85,
+                             genres: [Genre(name: "Adventure")],
+                             description: "Minecraft GAME")
+        mockService.result = .success([mockGame1, mockGame2])
+        let expectation = XCTestExpectation(description: "Games filtered")
+        viewModel.onGamesFetched = {
+            let filteredGames = self.viewModel.filterGames(by: "GTA")
+            XCTAssertEqual(filteredGames.count, 1)
+            XCTAssertEqual(filteredGames.first?.title, "GTA")
+            expectation.fulfill()
+        }
+        viewModel.fetchGames()
+        wait(for: [expectation], timeout: 1.0)
+    }
 }

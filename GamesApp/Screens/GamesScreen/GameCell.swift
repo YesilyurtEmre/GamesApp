@@ -29,7 +29,7 @@ class GameCell: UITableViewCell {
     }()
     private let genreLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.robotoLight(ofSize: 13)
+        label.font = UIFont.robotoMedium(ofSize: 13)
         label.textColor = .genreColor
         return label
     }()

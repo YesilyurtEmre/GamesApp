@@ -106,7 +106,7 @@ class GamesDetailVC: UIViewController {
         descriptionTitleLabel.font = UIFont.robotoRegular(ofSize: 19)
         descriptionTitleLabel.textColor = .primaryBlack
         contentView.addSubview(descriptionTitleLabel)
-        descriptionTextView.font = UIFont.robotoLight(ofSize: 15)
+        descriptionTextView.font = UIFont.robotoMedium(ofSize: 15)
         descriptionTextView.textColor = .darkGrayText
         descriptionTextView.isEditable = false
         descriptionTextView.isScrollEnabled = false
