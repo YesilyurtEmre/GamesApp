@@ -8,7 +8,7 @@
 import XCTest
 @testable import GamesApp
 final class GameDetailTests: XCTestCase {
-    private let mockJSON = Data("""
+  private let mockJSON = Data("""
     {
       "id": 99,
       "name": "The Witcher 3",
@@ -18,13 +18,13 @@ final class GameDetailTests: XCTestCase {
       "reddit_url": "https://reddit.com/r/witcher"
     }
     """.utf8)
-    func test_GameDetail_DecodeSuccess() throws {
-        let detail = try JSONDecoder().decode(GameDetail.self, from: mockJSON)
-        XCTAssertEqual(detail.id, 99)
-        XCTAssertEqual(detail.name, "The Witcher 3")
-        XCTAssertEqual(detail.backgroundImage, "https://image.url/witcher")
-        XCTAssertEqual(detail.description, "Geralt'ın hikayesi")
-        XCTAssertEqual(detail.website, "https://thewitcher.com")
-        XCTAssertEqual(detail.redditURL, "https://reddit.com/r/witcher")
-    }
+  func test_GameDetail_DecodeSuccess() throws {
+    let detail = try JSONDecoder().decode(GameDetail.self, from: mockJSON)
+    XCTAssertEqual(detail.id, 99)
+    XCTAssertEqual(detail.name, "The Witcher 3")
+    XCTAssertEqual(detail.backgroundImage, "https://image.url/witcher")
+    XCTAssertEqual(detail.description, "Geralt'ın hikayesi")
+    XCTAssertEqual(detail.website, "https://thewitcher.com")
+    XCTAssertEqual(detail.redditURL, "https://reddit.com/r/witcher")
+  }
 }

@@ -8,6 +8,6 @@
 import Testing
 
 struct GamesAppTests {
-    @Test func example() async throws {
-    }
+  @Test func example() async throws {
+  }
 }

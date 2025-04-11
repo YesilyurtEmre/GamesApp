@@ -7,6 +7,6 @@
 
 import Foundation
 protocol GameServiceProtocol {
-    func fetchGames(page: Int, completion: @escaping (Result<[Game], Error>) -> Void)
-    func fetchGameDetails(gameId: Int, completion: @escaping (Result<GameDetail, Error>) -> Void)
+  func fetchGames(page: Int, completion: @escaping (Result<[Game], Error>) -> Void)
+  func fetchGameDetails(gameId: Int, completion: @escaping (Result<GameDetail, Error>) -> Void)
 }

@@ -8,7 +8,7 @@
 import XCTest
 @testable import GamesApp
 final class GameResponseTests: XCTestCase {
-    private let mockJSON = Data("""
+  private let mockJSON = Data("""
     {
       "results": [
         {
@@ -25,16 +25,16 @@ final class GameResponseTests: XCTestCase {
       ]
     }
     """.utf8)
-    func test_GameResponse_DecodeSuccess() throws {
-        let response = try JSONDecoder().decode(GameResponse.self, from: mockJSON)
-        XCTAssertEqual(response.results.count, 1)
-        let game = response.results.first
-        XCTAssertEqual(game?.id, 1)
-        XCTAssertEqual(game?.name, "God of War")
-        XCTAssertEqual(game?.backgroundImage, "https://image.url")
-        XCTAssertEqual(game?.metacritic, 94)
-        XCTAssertEqual(game?.genres.count, 2)
-        XCTAssertEqual(game?.genres.first?.name, "Action")
-        XCTAssertEqual(game?.description, "Kratos'un hikayesi")
-    }
+  func test_GameResponse_DecodeSuccess() throws {
+    let response = try JSONDecoder().decode(GameResponse.self, from: mockJSON)
+    XCTAssertEqual(response.results.count, 1)
+    let game = response.results.first
+    XCTAssertEqual(game?.id, 1)
+    XCTAssertEqual(game?.name, "God of War")
+    XCTAssertEqual(game?.backgroundImage, "https://image.url")
+    XCTAssertEqual(game?.metacritic, 94)
+    XCTAssertEqual(game?.genres.count, 2)
+    XCTAssertEqual(game?.genres.first?.name, "Action")
+    XCTAssertEqual(game?.description, "Kratos'un hikayesi")
+  }
 }
