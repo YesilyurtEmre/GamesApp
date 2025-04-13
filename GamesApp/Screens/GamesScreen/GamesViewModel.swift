@@ -60,9 +60,26 @@ class GamesViewModel {
       }
     }
   }
-  func filterGames(by searchText: String) -> [GameViewModelItem] {
-    return gameItems.filter { game in
-      return game.title.lowercased().contains(searchText.lowercased())
+  func searchGames(with query: String, completion: @escaping ([GameViewModelItem]) -> Void) {
+    APIService.shared.searchGames(query: query) { [weak self] result in
+      switch result {
+      case .success(let games):
+        let items = games
+          .filter { $0.name.lowercased().starts(with: query.lowercased()) }
+          .map {
+            GameViewModelItem(
+              id: $0.id,
+              title: $0.name,
+              metacritic: String($0.metacritic ?? 0),
+              genres: $0.genres.map { $0.name }.joined(separator: ", "),
+              imageURL: $0.backgroundImage ?? ""
+            )
+          }
+        completion(items)
+      case .failure(let error):
+        self?.onError?(error.localizedDescription)
+        completion([])
+      }
     }
   }
 }
