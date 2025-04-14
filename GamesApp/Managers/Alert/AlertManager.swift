@@ -27,6 +27,7 @@ class AlertManager {
     on viewController: UIViewController,
     gameName: String,
     isFromFavourites: Bool) {
+    gameName: String) {
       let alert = UIAlertController(
         title: "Success",
         message: "\(gameName) has been removed from your favorites!",

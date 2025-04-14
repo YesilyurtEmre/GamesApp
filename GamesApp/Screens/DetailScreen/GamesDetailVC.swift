@@ -213,4 +213,5 @@ class GamesDetailVC: UIViewController {
             make.height.equalTo(1)
         }
     }
-}
+  }
+ 
