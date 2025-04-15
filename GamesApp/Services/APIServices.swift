@@ -18,44 +18,49 @@ class APIService: GameServiceProtocol {
                                   userInfo: [NSLocalizedDescriptionKey: "Invalid search query."])))
       return
     }
-    let urlString = "\(EndPoint.baseURL)/games"
+    let url = "\(EndPoint.baseURL)/games"
     let parameters: [String: Any] = [
       "key": EndPoint.apiKey,
       "search": encodedQuery,
       "page": page
     ]
-    AF.request(urlString, parameters: parameters)
-      .validate()
-      .responseDecodable(of: GameResponse.self) { response in
-        switch response.result {
-        case .success(let result):
-          completion(.success(result.results))
-        case .failure(let error):
-          completion(.failure(error))
-        }
+    performRequest(url: url, parameters: parameters, responseType: GameResponse.self) { result in
+      switch result {
+      case .success(let response):
+        completion(.success(response.results))
+      case .failure(let error):
+        completion(.failure(error))
       }
+    }
   }
   func fetchGames(page: Int, completion: @escaping (Result<[Game], Error>) -> Void) {
     let url = "\(EndPoint.games.url)&page=\(page)"
-    AF.request(url)
-      .validate()
-      .responseDecodable(of: GameResponse.self) { response in
-        switch response.result {
-        case .success(let gameResponse):
-          completion(.success(gameResponse.results))
-        case .failure(let error):
-          completion(.failure(error))
-        }
+    performRequest(url: url, responseType: GameResponse.self) { result in
+      switch result {
+      case .success(let response):
+        completion(.success(response.results))
+      case .failure(let error):
+        completion(.failure(error))
       }
+    }
   }
   func fetchGameDetails(gameId: Int, completion: @escaping (Result<GameDetail, Error>) -> Void) {
     let url = "\(EndPoint.baseURL)/games/\(gameId)?key=\(EndPoint.apiKey)"
-    AF.request(url)
+    performRequest(url: url, responseType: GameDetail.self, completion: completion)
+  }
+  // MARK: - Private Helper
+  private func performRequest<T: Decodable>(
+    url: String,
+    parameters: [String: Any]? = nil,
+    responseType: T.Type,
+    completion: @escaping (Result<T, Error>) -> Void
+  ) {
+    AF.request(url, parameters: parameters)
       .validate()
-      .responseDecodable(of: GameDetail.self) { response  in
+      .responseDecodable(of: responseType) { response in
         switch response.result {
-        case .success(let gameDetail):
-          completion(.success(gameDetail))
+        case .success(let decodedData):
+          completion(.success(decodedData))
         case .failure(let error):
           completion(.failure(error))
         }

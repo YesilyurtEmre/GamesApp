@@ -30,10 +30,7 @@ class GamesViewModel {
   var numberOfGames: Int {
     return gameItems.count
   }
-  var isLoading: Bool = false {
-    didSet {
-    }
-  }
+  var isLoading: Bool = false
   func game(at index: Int) -> GameViewModelItem {
     return gameItems[index]
   }
