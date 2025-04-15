@@ -10,7 +10,6 @@ import Foundation
 struct GameResponse: Decodable {
     let results: [Game]
 }
-
 struct Game: Decodable {
     let id: Int
     let name: String
@@ -27,7 +26,6 @@ struct Game: Decodable {
         case description
     }
 }
-
 struct Genre: Decodable {
     let name: String
 }
