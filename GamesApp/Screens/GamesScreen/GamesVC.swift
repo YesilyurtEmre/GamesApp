@@ -9,7 +9,15 @@ import UIKit
 import SnapKit
 
 class GamesVC: UIViewController {
-  private let viewModel = GamesViewModel()
+  private var viewModel: GamesViewModel!
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    let service = APIService.shared
+    viewModel = GamesViewModel(service: service)
+  }
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   private let tableView = UITableView()
   private let searchController = UISearchController(searchResultsController: nil)
   private var filteredGames: [GameViewModelItem] = []

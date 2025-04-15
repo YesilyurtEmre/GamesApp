@@ -18,6 +18,6 @@ extension UIColor {
         return UIColor(named: "GrayText") ?? .gray
     }
     static var descriptionColor: UIColor {
-        return UIColor(named: "DarkGray") ?? .darkGray
+        return UIColor(named: "DarkGrayText") ?? .darkGray
     }
 }
