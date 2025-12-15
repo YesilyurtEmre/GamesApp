@@ -195,7 +195,7 @@ class GamesDetailVC: UIViewController {
     }
     redditButton.snp.makeConstraints { make in
       make.top.equalTo(descriptionTextView.snp.bottom).offset(24)
-      make.leading.equalToSuperview().inset(16)
+      make.leading.trailing.equalToSuperview().inset(16)
     }
     divider2.snp.makeConstraints { make in
       make.top.equalTo(redditButton.snp.bottom).offset(8)
@@ -204,7 +204,7 @@ class GamesDetailVC: UIViewController {
     }
     websiteButton.snp.makeConstraints { make in
       make.top.equalTo(redditButton.snp.bottom).offset(16)
-      make.leading.equalToSuperview().inset(16)
+      make.leading.trailing.equalToSuperview().inset(16)
       make.bottom.equalTo(contentView.snp.bottom).offset(-16)
     }
     divider3.snp.makeConstraints { make in
